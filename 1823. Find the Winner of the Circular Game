@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int findTheWinner(int n, int k) {
+        int ans = 0;
+        for (int i = 2; i <= n; ++i) {
+            //kaun sa index winner bnega wo nikaal rhe hain har n ke liye 
+            ans = (ans + k) % i;
+        }
+        return ans + 1;
+        //adding 1 because of 1 based indexing 
+    }
+};
