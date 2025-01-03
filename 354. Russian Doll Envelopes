@@ -1,0 +1,89 @@
+Tried Using Recusrsion and Dp But ended up with TLE (Not even Space Optimisation worked) ----------------->>>>> Good Question 
+
+class Solution {
+public:
+    int solve(int i,int pre,int n,vector<vector<int>>& envelopes,vector<vector<int>>&dp){
+        if(i >= n){
+            return 0;
+        }
+        if(dp[i][pre + 1] != -1){
+            return dp[i][pre + 1];
+        }
+        int take = 0;
+        if(pre == -1 || (envelopes[pre][0]<envelopes[i][0] && envelopes[pre][1]<envelopes[i][1])){
+            take = 1 + solve(i+1,i,n,envelopes,dp);
+        }
+        int notTake = solve(i+1,pre,n,envelopes,dp);
+
+        return dp[i][pre + 1] = max(take , notTake );
+    }
+    int maxEnvelopes(vector<vector<int>>& envelopes) {
+        int n = envelopes.size();
+        sort(envelopes.begin(),envelopes.end());
+        vector<vector<int>>dp(n,vector<int>(n,-1));
+        return solve(0,-1,n,envelopes,dp);
+        
+        // Tabulation 
+        vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        for(int i = n-1;i>=0;i--){
+            for(int j = i-1;j>=-1;j--){
+                int take = 0;
+                if(j == -1 || (envelopes[j][0]<envelopes[i][0] && envelopes[j][1]<envelopes[i][1])){
+                    take = 1 + dp[i+1][i+1];
+                }
+                int notTake = dp[i+1][j+1];
+                dp[i][j+1] = max(notTake, take);
+            }
+        }
+        return dp[0][0];
+
+    }
+};
+
+
+Optimistion is Using BInary Search ---------------->>>>>>>>>>>>>>>>>>
+
+
+class Solution {
+public:
+    static bool comp(vector<int> &a,vector<int>&b){
+        if(a[0]==b[0]){
+            return a[1]>b[1];
+            //not a[1]<b[1] becz same width ko nhi fit krna ye usi sequence me add ho jaayenge
+        }
+        else{
+            return a[0]<b[0];
+        }
+    }
+    int maxEnvelopes(vector<vector<int>>& envelopes) {
+        sort(envelopes.begin(),envelopes.end(),comp);
+        vector<int> nums;
+        nums.push_back(envelopes[0][1]);
+        for(int i=1;i<envelopes.size();i++){
+            if(nums.back()<envelopes[i][1]){
+                nums.push_back(envelopes[i][1]);
+            }
+            else{
+                int idx = lower_bound(nums.begin(),nums.end(),envelopes[i][1])-nums.begin();
+                nums[idx] = envelopes[i][1];
+            }
+        }
+        return nums.size();
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
