@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<vector<int>> value;
+    Solution(vector<vector<int>> value) : value(value) {
+    }
+    vector<int> pick() {
+        int sum = 0;
+        vector<int> nums;
+        for (auto i : value) {
+            int area = (i[2] - i[0] + 1) * (i[3] - i[1] + 1);
+            sum += area;   
+            if (rand() % sum < area)
+                nums = i;
+        }
+        int x = rand() % (nums[2] - nums[0] + 1) + nums[0];
+        int y = rand() % (nums[3] - nums[1] + 1) + nums[1];
+        
+        return {x,y};
+    }
+};
