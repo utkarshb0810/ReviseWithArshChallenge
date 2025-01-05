@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int numberOfSubarrays(vector<int>& nums, int k) {
+        int n = nums.size();
+        int cnt = 0;
+        int ans = 0;
+        int prefix = 0;
+        unordered_map<int, int> mp;
+        mp[0] = 1;
+        for (int num : nums) {
+            cnt += num % 2;
+            // If there are `cnt - k` odd numbers, add their frequency
+            if (mp.find(cnt - k) != mp.end()) {
+                ans += mp[cnt - k];
+            }
+            // Update the frequency of the current odd count
+            mp[cnt]++;
+        }
+        return ans;
+    }
+};
