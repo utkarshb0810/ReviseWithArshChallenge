@@ -1,0 +1,23 @@
+class Solution {
+public:
+    long long maximumSubarraySum(vector<int>& nums, int k) {
+        int n = nums.size();
+        int i = 0, j = 0;
+        long long maxi = 0, sum = 0;
+        unordered_map<int, int> mp;
+        while (j < n) {
+            mp[nums[j]]++;
+            sum += nums[j];
+            while (mp[nums[j]] > 1 || (j - i + 1 > k)) {
+                mp[nums[i]]--;
+                sum -= nums[i];
+                i++;
+            }
+            if (j - i + 1 == k) {
+                maxi = max(maxi, sum);
+            }
+            j++;
+        }
+        return maxi;
+    }
+};
