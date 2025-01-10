@@ -1,0 +1,15 @@
+void matchPairs(int n, char nuts[], char bolts[]) {
+        char order[]={'!','#','$','%','&','*','?','@','^'};
+        unordered_map<char,int> mp;
+        for(int i=0;i<n;i++){
+            mp[nuts[i]]++;
+        }
+        int j=0;
+        for(int i=0;i<9;i++){
+            if(mp.find(order[i]) != mp.end()){
+                nuts[j] = order[i];
+                bolts[j] = order[i];
+                j++;
+            }
+        }
+    }
