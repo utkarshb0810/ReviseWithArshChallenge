@@ -1,0 +1,19 @@
+vector<int> maxOfSubarrays(vector<int>& arr, int k) {
+       int  n = arr.size();
+       vector<int> ans;
+       priority_queue<pair<int, int> > pq;
+       for(int i = 0;i<k;i++){
+           pq.push({arr[i], i});
+       }
+       ans.push_back(pq.top().first);
+       for(int i = k;i<n;i++){
+           pq.push({arr[i], i});
+           int topIndex = pq.top().second;
+           while(topIndex <= i - k ){
+               pq.pop();
+               topIndex = pq.top().second;
+           }
+           ans.push_back(pq.top().first);
+       }
+      return ans;
+    }
