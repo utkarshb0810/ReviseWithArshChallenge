@@ -1,0 +1,44 @@
+class Solution {
+public:
+    void buildGraph(unordered_map<int, vector<int>>& adj, TreeNode* root) {
+        if (root == NULL) {
+            return;
+        }
+        if (root->left != NULL) {
+            adj[root->val].push_back(root->left->val);
+            adj[root->left->val].push_back(root->val);
+        }
+        if (root->right != NULL) {
+            adj[root->val].push_back(root->right->val);
+            adj[root->right->val].push_back(root->val);
+        }
+        buildGraph(adj, root->left);
+        buildGraph(adj, root->right);
+    }
+    int amountOfTime(TreeNode* root, int start) {
+        unordered_map<int, vector<int>> adj;
+        buildGraph(adj, root);
+        queue<int> q;
+        unordered_map<int, bool> vis;
+        q.push(start);
+        vis[start] = true;
+        int time = 0;
+        while (!q.empty()) {
+            int sz = q.size();
+            bool hasSpread = false;
+            while (sz--) {
+                int node = q.front();
+                q.pop();
+                for (int neighbor : adj[node]) {
+                    if (!vis[neighbor]) {
+                        vis[neighbor] = true;
+                        q.push(neighbor);
+                        hasSpread = true;
+                    }
+                }
+            }
+            if (hasSpread) time++; 
+        }
+        return time;
+    }
+};
