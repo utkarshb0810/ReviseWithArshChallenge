@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool solve(int idx,string s,unordered_set<string>&st,vector<int>&dp){
+        if(idx >= s.size()){
+            return true;
+        }
+        if(st.find(s) != st.end()){
+            return true;
+        }
+        if(dp[idx]!= -1){
+            return dp[idx];
+        }
+        for(int j=0;j<s.size();j++){
+            if((st.find(s.substr(idx,j+1)) != st.end()) && solve(idx+j+1,s,st,dp)){
+                return dp[idx] = true;
+            }
+        }
+        return dp[idx]=false; 
+    }
+    bool wordBreak(string s, vector<string>& dict) {
+        unordered_set<string>st;
+        for(int i = 0;i<dict.size();i++){
+            st.insert(dict[i]);
+        }
+        vector<int>dp(s.size(),-1);
+        return solve(0,s,st,dp);
+    }
+};
