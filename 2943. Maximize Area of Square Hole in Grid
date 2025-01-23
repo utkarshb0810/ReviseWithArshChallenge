@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int solve(vector<int> bars) {
+        sort(bars.begin(), bars.end());
+        int cnt = 2;
+        int maxi = 2;
+        for (int i = 1; i < bars.size(); ++i) {
+            cnt = (bars[i - 1] + 1 == bars[i]) ? cnt + 1 : 2;
+            maxi = max(maxi, cnt);
+        }
+        return maxi;
+    }
+    int maximizeSquareHoleArea(int n, int m, vector<int>& hBars,vector<int>& vBars) {
+        int ans = min(solve(hBars), solve(vBars));
+        return ans * ans;
+    }
+};
