@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> beautifulIndices(string s, string a, string b, int k) {
+        vector<int> indexOfA;
+        vector<int> indexOfB;
+        if (a.size() > s.size() || b.size() > s.size()) {
+            return {}; 
+        }
+        for (int i = 0; i <s.size()-a.size()+1; i++) {
+            if (s.substr(i, a.size()) == a){
+                indexOfA.push_back(i);
+            }
+        }
+        for (int i = 0; i < s.size()-b.size()+1; i++) {
+            if (s.substr(i, b.size()) == b){
+                indexOfB.push_back(i);
+            }
+        }
+
+        vector<int> ans;
+        for (auto& i : indexOfA) {
+            auto it = lower_bound(indexOfB.begin(), indexOfB.end(), i - k);
+            if (it != indexOfB.end() && *it <= i + k){
+                ans.push_back(i);
+            }
+        }
+        return ans;
+    }
+};
