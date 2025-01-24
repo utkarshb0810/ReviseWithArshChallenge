@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int wordCount(vector<string>& s, vector<string>& t) {
+        unordered_map<string, int> freq;
+        for (auto& word : t) {
+            sort(word.begin(), word.end());
+            freq[word]++;
+        }
+        int cnt = 0;
+        for (auto& word : s) {
+            string sortedWord = word;
+            sort(sortedWord.begin(), sortedWord.end());
+
+            for (char ch = 'a'; ch <= 'z'; ch++) {
+                if (sortedWord.find(ch) == string::npos) {
+                    string newWord = sortedWord + ch;
+                    sort(newWord.begin(), newWord.end());
+
+                    if (freq.count(newWord)) {
+                        cnt += freq[newWord];
+                        freq.erase(newWord); // Avoid double-counting
+                    }
+                }
+            }
+        }
+        return cnt;
+    }
+};
