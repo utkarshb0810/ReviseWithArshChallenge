@@ -1,0 +1,27 @@
+class Solution {
+public:
+    long long MOD = 1e9 + 7;
+    long long power(long long base, long long ex, long long MOD) {
+        if (ex == 0){
+            return 1;
+        }
+        if (ex == 1){
+            return base % MOD;
+        }
+        long long value = power(base, ex / 2, MOD);
+        
+        if (ex % 2 == 0) { 
+            return (value * value) % MOD;
+        }
+        else { 
+            value = value * value % MOD; 
+            base %= MOD;
+            return (value * base) % MOD;
+        }
+    }
+    int minNonZeroProduct(int p) {
+        long long range = (1LL << p) - 1;
+        long long value = power(range - 1, range / 2, MOD);
+        return (value * (range % MOD)) % MOD;
+    }
+};
