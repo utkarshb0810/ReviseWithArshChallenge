@@ -1,0 +1,23 @@
+class Solution {
+public:
+   set<pair<int,int>> s;
+    int i , j; 
+    Solution(int m, int n){ 
+        i = m ; 
+        j = n ; 
+    }
+    vector<int> flip() {
+        int x = rand() % i; 
+        int y = rand() % j; 
+        if(s.find({x,y}) == s.end()){ 
+            s.insert({x,y});
+            return {x,y};
+        }
+        else{
+            return flip();
+        }
+    }
+    void reset(){
+         s.clear(); 
+    }
+};
