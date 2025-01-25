@@ -1,0 +1,18 @@
+vector<int> findTwoElement(vector<int> arr, int n) {
+        vector<int> ans;
+        map<int,int> m;
+        for(int i = 0;i<n;i++){
+            m[arr[i]]++;
+        }
+        for(auto i : m){
+            if(i.second>1){
+                ans.push_back(i.first);
+            }
+        }
+        for(int i = 1;i<=n;i++){
+            if(m.find(i) == m.end()){
+                ans.push_back(i);
+            }
+        }
+        return ans;
+    }
