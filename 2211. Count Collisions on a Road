@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int countCollisions(string directions) {  
+        int n = directions.length();
+        int cntR=0;
+        int cnt=0;
+        int i=0;
+        while(i<n && directions[i]=='L'){
+            i++;
+        }
+        while(i<n){
+            if(directions[i]=='R'){
+                cntR++;
+            }
+            else{
+                if(directions[i]=='S'){
+                    cnt += cntR;
+                }
+                else{
+                    cnt += cntR+1;
+                }
+                cntR = 0;
+            }
+            i++;
+        }
+        return cnt;
+        
+    }
+};
