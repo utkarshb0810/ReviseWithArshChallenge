@@ -1,0 +1,26 @@
+
+class Solution {
+    vector<int> solve(TreeNode* node, int& mini) {
+        if (node == NULL) {
+            return {INT_MAX, INT_MIN, 0};
+        }
+        vector<int> left = solve(node->left,mini);
+        vector<int> right = solve(node->right,mini);
+
+        if (left[1] >= node->val || right[0] <= node->val) {
+            return {INT_MIN, INT_MAX, 0};
+        }
+        int res = left[2] + right[2] + node->val;
+        mini = max(mini, res);
+        return {min(node->val, left[0]), max(right[1], node->val),res};
+    }
+public:
+    int maxSumBST(TreeNode* root) {
+        int mini = INT_MIN;
+        solve(root,mini);
+        if (mini < 0){
+            return 0;
+        }
+        return mini;
+    }
+};
