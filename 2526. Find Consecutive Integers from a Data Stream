@@ -1,0 +1,20 @@
+class DataStream {
+public:
+    int val = 0;
+    int maxi = 0;
+    int cnt = 0;
+    DataStream(int value, int k) {
+        val = value;
+        maxi = k;
+    }
+
+    bool consec(int num) {
+        if(num == val){
+            cnt++;
+        }
+        else{
+            cnt = 0;
+        }
+        return cnt >= maxi;
+    }
+};
